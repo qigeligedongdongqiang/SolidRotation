@@ -20,9 +20,45 @@ class ViewController: UIViewController {
         gestureView.center = view.center
         view.addSubview(gestureView)
         
-        let rotateView = UIView(frame: gestureView.bounds)
-        rotateView.backgroundColor = UIColor.red
-        gestureView.addSubview(rotateView)
+        for i in 0...5 {
+            let rotateView = UIView()
+            gestureView.addSubview(rotateView)
+            rotateView.bounds = gestureView.bounds
+            var transform = CATransform3DIdentity
+            switch i {
+            case 0:
+                rotateView.backgroundColor = UIColor.red
+                rotateView.center = CGPoint(x: gestureView.bounds.size.width/2, y: gestureView.bounds.size.height/2)
+                transform = CATransform3DTranslate(transform, 0, 0, gestureView.bounds.size.width/2)
+                rotateView.layer.transform = transform
+            case 1:
+                rotateView.backgroundColor = UIColor.blue
+                rotateView.center = CGPoint(x: 0, y: gestureView.bounds.size.height/2)
+                transform = CATransform3DRotate(transform, -CGFloat.pi/2, 0, 1, 0)
+                rotateView.layer.transform = transform
+            case 2:
+                rotateView.backgroundColor = UIColor.gray
+                rotateView.center = CGPoint(x: gestureView.bounds.size.width, y: gestureView.bounds.size.height/2)
+                transform = CATransform3DRotate(transform, CGFloat.pi/2, 0, 1, 0)
+                rotateView.layer.transform = transform
+            case 3:
+                rotateView.backgroundColor = UIColor.black
+                rotateView.center = CGPoint(x: gestureView.bounds.size.width/2, y: gestureView.bounds.size.height/2)
+                transform = CATransform3DTranslate(transform, 0, 0, -gestureView.bounds.size.width/2)
+                rotateView.layer.transform = transform
+            case 4:
+                rotateView.backgroundColor = UIColor.green
+                rotateView.center = CGPoint(x: gestureView.bounds.size.width/2, y: 0)
+                transform = CATransform3DRotate(transform, -CGFloat.pi/2, 1, 0, 0)
+                rotateView.layer.transform = transform
+            case 5:
+                rotateView.backgroundColor = UIColor.yellow
+                rotateView.center = CGPoint(x: gestureView.bounds.size.width/2, y: gestureView.bounds.size.height)
+                transform = CATransform3DRotate(transform, CGFloat.pi/2, 1, 0, 0)
+                rotateView.layer.transform = transform
+            default : break
+            }
+        }
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(viewTransform))
         gestureView.addGestureRecognizer(panGesture)
@@ -30,10 +66,13 @@ class ViewController: UIViewController {
     
     func viewTransform(sender: UIPanGestureRecognizer) {
         let point = sender.translation(in: gestureView)
-        let angleX = angle.x + point.x/30
-        let angleY = angle.y - point.y/30
+        //旋转快慢因数
+        let rotateSpeedFactor: CGFloat = 100.0;
+        let angleX = angle.x + point.x/rotateSpeedFactor
+        let angleY = angle.y - point.y/rotateSpeedFactor
         
         var transform = CATransform3DIdentity
+        //立体形变-1/d，d越大立体形变越弱
         transform.m34 = -1/500
         transform = CATransform3DRotate(transform, angleX, 0, 1, 0)
         transform = CATransform3DRotate(transform, angleY, 1, 0, 0)
