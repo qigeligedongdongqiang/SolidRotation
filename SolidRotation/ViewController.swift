@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        view.backgroundColor = UIColor.lightGray
         gestureView.bounds = CGRect(x: 0, y: 0, width: 200, height: 200)
         gestureView.center = view.center
         view.addSubview(gestureView)
@@ -37,17 +38,17 @@ class ViewController: UIViewController {
                 transform = CATransform3DRotate(transform, -CGFloat.pi/2, 0, 1, 0)
                 rotateView.layer.transform = transform
             case 2:
-                rotateView.backgroundColor = UIColor.gray
+                rotateView.backgroundColor = UIColor.green
                 rotateView.center = CGPoint(x: gestureView.bounds.size.width, y: gestureView.bounds.size.height/2)
                 transform = CATransform3DRotate(transform, CGFloat.pi/2, 0, 1, 0)
                 rotateView.layer.transform = transform
             case 3:
-                rotateView.backgroundColor = UIColor.black
+                rotateView.backgroundColor = UIColor.purple
                 rotateView.center = CGPoint(x: gestureView.bounds.size.width/2, y: gestureView.bounds.size.height/2)
                 transform = CATransform3DTranslate(transform, 0, 0, -gestureView.bounds.size.width/2)
                 rotateView.layer.transform = transform
             case 4:
-                rotateView.backgroundColor = UIColor.green
+                rotateView.backgroundColor = UIColor.orange
                 rotateView.center = CGPoint(x: gestureView.bounds.size.width/2, y: 0)
                 transform = CATransform3DRotate(transform, -CGFloat.pi/2, 1, 0, 0)
                 rotateView.layer.transform = transform
